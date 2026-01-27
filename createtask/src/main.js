@@ -1,24 +1,21 @@
 import './style.css'
 
-import './style.css'
-
 const questions = [
   {
     question: "PLACEHOLDER",
     answers: ["Berlin", "Madrid", "Paris", "Rome"],
-    correct: 2
+    correct: "Berlin"
   },
   {
     question: "PLACEHOLDER 2",
     answers: ["Berlin", "Madrid", "Paris", "Rome"],
-    correct: 2
+    correct: "Paris"
   },
 ];
 
-let score = 0;
+let answered = 0;
 const questionbox = document.querySelector('.question');
 const answerbox = document.querySelector('.answers');
-const scorebox = document.querySelector('.score');
 
 function loadQuestion() {
   questionbox.innerHTML = "";
@@ -27,19 +24,41 @@ function loadQuestion() {
   questionbox.insertAdjacentHTML(
     'afterbegin',
     `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
-      ${questions[score].question}
+      ${questions[answered].question}
     </h2>`
   );
 
-  questions[score].answers.forEach((answer, index) => {
+  questions[answered].answers.forEach(answer => {
     answerbox.insertAdjacentHTML(
-      'afterbegin',
-      `<button 
-         class="bg-blue-200 hover:bg-blue-300 text-blue-950 font-bold py-2 px-4 rounded h-20 m-5"
-         data-index="${index}">
-         ${answer}
+      'beforeend',
+      `<button class="bg-blue-200 hover:bg-blue-300 text-blue-950 font-bold py-2 px-4 rounded h-20 m-5"
+        id = "${answer}">
+        ${answer}
        </button>`
     );
+  });
+
+  answerbox.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      if (button.id === questions[answered].correct) {
+        answered++;
+        if (answered < questions.length) {
+          loadQuestion();
+        } else {
+          questionbox.innerHTML = `
+            <h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
+              Congratulations!
+            </h2>`;
+          answerbox.innerHTML = "";
+        }
+      } else {
+        questionbox.innerHTML = `
+          <h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
+            Wrong answer. Try again!
+          </h2>`;
+        answerbox.innerHTML = "";
+      }
+    });
   });
 }
 
