@@ -54,7 +54,6 @@ const questions = [
 ];
 //questions and answers (+ correct answer)
 
-
 let answered = 0; //tracks how many questions answered
 const questionbox = document.querySelector('.question');
 const answerbox = document.querySelector('.answers');
@@ -88,7 +87,7 @@ function loadQuestion() {
       if (button.id === questions[answered].correct) {
         answered++; //add to the answered values if correct
         if (answered < questions.length) {
-          loadQuestion(); //load the next question
+          loadQuestion(); //load the next question if the number answered is less than the total number of questions
         } else {
           questionbox.innerHTML = `
             <h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
@@ -107,4 +106,4 @@ function loadQuestion() {
   });
 }
 
-loadQuestion();
+loadQuestion(); //starts with the first question
