@@ -89,18 +89,22 @@ function loadQuestion() {
         if (answered < questions.length) {
           loadQuestion(); //load the next question if the number answered is less than the total number of questions
         } else {
-          questionbox.innerHTML = `
-            <h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
+          questionbox.insertAdjacentHTML(
+            'afterbegin',
+            `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
               Congratulations!
-            </h2>`;
+            </h2>`
+          );
           answerbox.innerHTML = ""; //clear the answer box
         }
       } else {
-        questionbox.innerHTML = `
-          <h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
+        questionbox.insertAdjacentHTML(
+          'afterbegin',
+          `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
             Wrong answer. Try again!
-          </h2>`; //end the game if the answer's wrong
-          answerbox.innerHTML = "";
+          </h2>`
+        ); //end the game if the answer's wrong
+        answerbox.innerHTML = "";
       }
     });
   });
