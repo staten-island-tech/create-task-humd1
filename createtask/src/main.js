@@ -58,21 +58,21 @@ let answered = 0; //tracks how many questions answered
 const questionbox = document.querySelector('.question');
 const answerbox = document.querySelector('.answers');
 
-function loadQuestion() {
+function loadQuestion(index) {
   questionbox.innerHTML = ""; //clears the previous question and answers
   answerbox.innerHTML = "";
 
   questionbox.insertAdjacentHTML(
     'afterbegin',
     `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
-      ${questions[answered].question} 
+      ${questions[index].question} 
     </h2>`
-    //inserts question based on the number of questions answered
+    //inserts question based on index value
   );
 
-  questions[answered].answers.forEach(answer => {
+  questions[index].answers.forEach(answer => {
     answerbox.insertAdjacentHTML(
-      'beforeend',
+      'afterbegin',
       `<button class="bg-blue-200 hover:bg-blue-300 text-blue-950 font-bold py-2 px-4 rounded h-20 m-5"
         id = "${answer}"> 
         ${answer}
@@ -87,8 +87,9 @@ function loadQuestion() {
       if (button.id === questions[answered].correct) {
         answered++; //add to the answered values if correct
         if (answered < questions.length) {
-          loadQuestion(); //load the next question if the number answered is less than the total number of questions
+          loadQuestion(answered); //load the next question if the number answered is less than the total number of questions
         } else {
+          questionbox.innerHTML = "";
           questionbox.insertAdjacentHTML(
             'afterbegin',
             `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
@@ -98,6 +99,7 @@ function loadQuestion() {
           answerbox.innerHTML = ""; //clear the answer box
         }
       } else {
+        questionbox.innerHTML = "";
         questionbox.insertAdjacentHTML(
           'afterbegin',
           `<h2 class="text-2xl font-bold text-center pb-10 text-blue-950">
@@ -110,4 +112,4 @@ function loadQuestion() {
   });
 }
 
-loadQuestion(); //starts with the first question
+loadQuestion(0); //starts with the first question
